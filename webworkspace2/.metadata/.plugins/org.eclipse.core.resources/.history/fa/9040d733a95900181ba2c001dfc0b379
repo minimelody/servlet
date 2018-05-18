@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>좋아하는 관광지를 선택하시오 (다중 가능)</h1>
+	<hr>
+	<form action="/web1/check" method="get">
+		<input type="checkbox" value="제주도">제주도
+	</form> 
+</body>
+</html>

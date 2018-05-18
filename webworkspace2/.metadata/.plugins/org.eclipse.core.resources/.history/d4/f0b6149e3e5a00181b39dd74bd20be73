@@ -1,0 +1,12 @@
+package member.model.service;
+
+import member.model.vo.Member;
+
+public class MemberService {
+	public MemberService() {} //디폴트 생성자
+	public Member selectmember(String userId, String userPwd) 
+	{
+		return null;
+		
+	}
+}

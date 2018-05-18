@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>계산기 입니다.</h1>
+	<form 
+	<input type="text" name="firstValue">
+	<select name="cal">
+		<option>+</option>
+		<option>-</option>
+		<option>*</option>
+		<option>/</option>
+	</select>
+	<input type="text" name="secondValue">
+	<input type="submit"
+</body>
+</html>

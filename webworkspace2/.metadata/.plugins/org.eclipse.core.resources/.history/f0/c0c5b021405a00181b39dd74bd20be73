@@ -1,0 +1,14 @@
+package member.model.dao;
+
+import java.sql.Connection;
+
+import member.model.vo.Member;
+
+public class MemberDao {
+
+	public Member selectMember(Connection conn, String userId, String userPwd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}
