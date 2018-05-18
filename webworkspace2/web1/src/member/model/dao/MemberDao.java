@@ -15,7 +15,7 @@ public class MemberDao {
 		
 		String query = "SELECT * FROM member WHERE MEMBER_ID = '" + userId + "' AND MEMBER_PWD = '" + userPwd + "'";
 		
-		Member m = new Member();
+		Member m = null;
 		
 		try {
 			stmt = conn.createStatement();
@@ -23,6 +23,7 @@ public class MemberDao {
 			
 			if(rset.next())
 			{
+				m = new Member();
 				m.setMemberId(rset.getString("member_id"));
 				m.setMemberPwd(rset.getString("member_pwd"));
 				m.setMemberName(rset.getString("member_name"));
