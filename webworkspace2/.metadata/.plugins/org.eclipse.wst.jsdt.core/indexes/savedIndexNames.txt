@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 INDEX VERSION 1.4+C:\webworkspace2\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
 4232874004.index
 472456348.index
+=======
+INDEX VERSION 1.4+C:\servlet\webworkspace2\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2233486630.index
+3019881886.index
+1488688393.index
+>>>>>>> efead7d24b153bbbde59c3c47078976ca59edf3a

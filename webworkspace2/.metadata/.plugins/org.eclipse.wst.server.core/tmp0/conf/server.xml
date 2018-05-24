@@ -149,7 +149,11 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
+<<<<<<< HEAD
       <Context docBase="C:\webworkspace2\web2\WebContent" path="" reloadable="true" source="org.eclipse.jst.jee.server:web2"><Resources><PreResources base="C:\webworkspace2\web2\build\classes" classLoaderOnly="false" className="org.apache.catalina.webresources.DirResourceSet" internalPath="/" webAppMount="/WEB-INF/classes"/></Resources></Context></Host>
+=======
+      <Context docBase="C:\servlet\webworkspace2\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\servlet\webworkspace2\web1\WebContent" path="/web1" reloadable="true" source="org.eclipse.jst.jee.server:web1"><Resources><PreResources base="C:\servlet\webworkspace2\web1\build\classes" classLoaderOnly="false" className="org.apache.catalina.webresources.DirResourceSet" internalPath="/" webAppMount="/WEB-INF/classes"/></Resources></Context></Host>
+>>>>>>> efead7d24b153bbbde59c3c47078976ca59edf3a
     </Engine>
   </Service>
 </Server>
