@@ -26,7 +26,6 @@ public class MemberService {
 	public int activation(String activation, String userId) {
 		Connection conn = JDBCTemplate.conn();
 		int result = new MemberDao().activation(conn, activation, userId);
-		System.out.println(result);
 		if(result>0)
 		{
 			JDBCTemplate.commit(conn);

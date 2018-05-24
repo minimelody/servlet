@@ -32,17 +32,25 @@ public class MemberActivationServlet extends HttpServlet {
 		//2. 변수값 꺼내서 저장
 		String activation = request.getParameter("active");
 		String userId = request.getParameter("userId");
+		if(activation.toUpperCase().equals("Y"))
+		{
+			activation = "N";
+		}
+		else {
+			activation = "Y";
+		}
 		int result = new MemberService().activation(activation, userId);
 		//3.
 		if(result>0) {
-			activation = "Y";
+			response.sendRedirect("allMember");
 		}
 		else {
-			activation = "N";
+			response.sendRedirect("views/member/activationError.jsp");
 		}
 		
 		//4.
-		response.sendRedirect("allMember");
+
+		
 	}
 
 	/**
