@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="member.model.vo.*" import="member.model.service.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>회원 정보 수정</title>
+</head>
+<body>
+<%
+	Member m = new Member();
+	request.setCharacterEncoding("utf-8");
+	m.setMemberId(request.getParameter("userId"));
+	m.setMemberPwd(request.getParameter("userPwd"));
+	m.setMemberAddr(request.getParameter("userAddr"));
+	boolean chk = new MemberService().updateMember(m);
+	if(chk==true)
+	{
+		m = new MemberService().selectMember(request.getParameter("userId"), request.getParameter("userPwd"));
+%>		session.setAttribute("user",m);
+		회원 정보 수정 완료!<br>
+<% }else{%>
+	회원 정보 수정 실패!<br>
+	지속적으로 실패시 관리자에게 문의하세요<br>
+<% } %>
+<a href="/web1/views/member/myinfo.jsp">마이페이지로 이동</a>
+<a href="/web1/views/member/memberIndex.html">로그인 페이지로 이동</a>
+</body>
+</html>

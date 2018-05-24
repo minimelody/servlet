@@ -1,0 +1,16 @@
+package common;
+
+import java.sql.Connection;
+
+public class JDBCTemplate {
+	static Connection conn() {
+		Connection conn = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return conn;
+		
+	}
+}

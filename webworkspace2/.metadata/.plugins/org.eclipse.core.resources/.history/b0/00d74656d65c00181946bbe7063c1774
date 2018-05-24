@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ID 중복검사 페이지</title>
+</head>
+<body>
+<form action="idCheck.jsp" method="get">
+중복검사 할 ID 입력 : <input type="text" id="id">
+<input type="submit" value="중복검사">
+</form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+package member.model.service;
+
+import java.sql.Connection;
+
+import member.model.vo.Member;
+import common.JDBCTemplate;
+
+public class MemberService {
+
+	public Member selectOne(Connection conn, String userId, String userPwd) {
+		return m;
+	}
+
+}

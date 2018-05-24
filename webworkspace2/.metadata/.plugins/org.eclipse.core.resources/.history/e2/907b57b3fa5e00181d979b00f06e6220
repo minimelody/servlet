@@ -1,0 +1,16 @@
+package member.model.dao;
+
+import java.sql.PreparedStatement;
+
+import member.model.vo.Member;
+
+public class MemberDao {
+
+	public Member selectOne(String userId, String userPwd) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		return null;
+	}
+
+}

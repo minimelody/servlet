@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 페이지</title>
+</head>
+<body>
+<!-- JSP를 이용한 MVC 1 패턴 CRUD 구현 -->
+<!-- 
+	1. 회원 로그인 (Read)
+	2. 회원 가입
+	3. 마이 페이지 (회원 정보 수정)
+	4. 회원 탈퇴
+ -->
+</body>
+</html>

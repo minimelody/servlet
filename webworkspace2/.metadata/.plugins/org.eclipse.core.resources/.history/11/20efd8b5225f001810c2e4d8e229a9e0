@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="member.model.vo.*" import=""%>
+<% ArrayList<Member> list = request.getAttribute("userList"); %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>관리자 : 회원 관리 페이지</h1>
+<table>
+	<tr>
+		<th>ID</th><th>이름</th><th>나이</th><th>이메일</th><th>휴대폰</th><th>주소</th><th>성별</th><th>취미</th><th>가입날짜</th>
+	</tr>
+	<% for(Member m : list){ %>
+	<tr>
+		<td></td>
+	</tr>
+	<% } %>
+</table>
+</body>
+</html>

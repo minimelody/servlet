@@ -1,6 +1,7 @@
 package member.model.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ public class MemberDao {
 		
 		String query = "SELECT * FROM member WHERE MEMBER_ID = '" + userId + "' AND MEMBER_PWD = '" + userPwd + "'";
 		
-		Member m = new Member();
+		Member m = null;
 		
 		try {
 			stmt = conn.createStatement();
@@ -23,6 +24,7 @@ public class MemberDao {
 			
 			if(rset.next())
 			{
+				m = new Member();
 				m.setMemberId(rset.getString("member_id"));
 				m.setMemberPwd(rset.getString("member_pwd"));
 				m.setMemberName(rset.getString("member_name"));
@@ -43,5 +45,139 @@ public class MemberDao {
 		
 		return m;
 	}
+
+	public boolean updateMember(Connection conn, Member m) {
+		Statement stmt = null;
+		int result = 0;
+		
+		String query = "UPDATE member SET MEMBER_PWD = '" + m.getMemberPwd() 
+						+ "', MEMBER_ADDR = '" + m.getMemberAddr() + "' WHERE MEMBER_ID = '" + m.getMemberId() + "'";
+		
+		
+		try {
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
+			if(result>0)
+			{
+				conn.commit();
+			}
+			else
+			{
+				conn.rollback();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result>0;
+	}
 	
+	public boolean idCheck(Connection conn, String id) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		boolean result = false;
+		
+		String query = "SELECT * FROM member WHERE MEMBER_ID = '" + id + "'";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next())
+			{
+				result =  true; // 해당 ID 사용자가 있음
+			}
+			else
+			{
+				result = false; // 해당 ID 사용자가 없음
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rset.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
+	}
+
+	public boolean insertMember(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      boolean result = false;
+	      try {
+	         String query = "INSERT INTO MEMBER VALUES(?,?,?,?,?)";
+	         pstmt = conn.prepareStatement(query);
+	         pstmt.setString(1, m.getMemberId());
+	         pstmt.setString(2, m.getMemberPwd());
+	         pstmt.setString(3, m.getMemberName());
+	         pstmt.setInt(4, m.getMemberAge());
+	         pstmt.setString(5, m.getMemberAddr());
+	         rset = pstmt.executeQuery();
+			if(rset.next())
+			{
+				result=true;
+				conn.commit();
+			}
+			else
+			{
+				conn.rollback();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public boolean deleteMember(Connection conn, String id) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		boolean result = false;
+		
+		String query = "delete from member where member_id = '"+id+"'";
+		
+		System.out.println(query);
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next())
+			{
+				result =  true; 
+			}
+			else
+			{
+				result = false; 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rset.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }

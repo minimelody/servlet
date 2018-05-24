@@ -9,12 +9,11 @@ import member.model.vo.Member;
 
 public class MemberService {
 	public MemberService() {} //디폴트 생성자
+	
 	public Member selectMember(String userId,String userPwd)
 	{
 		Connection conn = null;
-		//커넥션 코드 작성 후에
 		Member m = null;
-		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
@@ -31,5 +30,93 @@ public class MemberService {
 			}
 		}
 		return m;	
+	}
+	
+	public boolean updateMember(Member m)
+	{
+		Connection conn = null;
+		boolean chk=false;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
+			chk = new MemberDao().updateMember(conn,m);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return chk;
+	}
+	
+	public boolean idCheck(String id) {
+		Connection conn = null;
+		boolean result = false;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
+			result = new MemberDao().idCheck(conn,id);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public boolean insertMember(Member m)
+	{
+		Connection conn = null;
+		boolean result = false;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
+			result = new MemberDao().insertMember(conn,m);
+			System.out.println("회원가입 확인"+result);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public boolean memberDelete(String id)
+	{
+		Connection conn = null;
+		boolean result = false;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","login_member","login_member");
+			result = new MemberDao().deleteMember(conn,id);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 }

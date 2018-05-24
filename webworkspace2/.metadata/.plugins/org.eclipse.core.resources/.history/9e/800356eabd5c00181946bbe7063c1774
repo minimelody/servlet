@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="member.model.vo.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>나의 정보 출력</title>
+</head>
+<body>
+<% 
+	request.getSession(false);
+	// 세션을 가지고 접속했다면 해당 세션값을 사용
+	// 세션이 없는 항태로 접속했다면 null을 리턴
+	if(session!=null)
+	{
+		Member m = (Member)session.getAttribute("user");
+%>
+	ID : <%=m.getMemberId()%> <br>
+	NAME : <%=m.getMemberName() %><br>
+
+	<% }else{ %>
+		로그인 후에 이용해주세요!
+		<a href="/web1/views/member/memberIndex.html">로그인 페이지</a>
+	<% } %>
+	Member m = (Member)session.getAttribute("user"); %>
+ID : <%=m.getMemberName() %>
+
+</body>
+</html>

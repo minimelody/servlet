@@ -1,0 +1,12 @@
+package member.model.dao;
+
+import member.model.vo.Member;
+
+public class MemberDao {
+
+	public Member selectOne(String userId, String userPwd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

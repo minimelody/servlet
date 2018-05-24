@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<% int first = Integer.parseInt(request.getParameter("firstValue")); %>
+	<% int second = Integer.parseInt(request.getParameter("secondValue")); %>
+	<% String cal = request.getParameter("cal"); %>
+
+		
+		
+
+
+
+	<% int firstValue = Integer.parseInt(request.getParameter("firstValue")); %>
+	<% int secondValue = Integer.parseInt(request.getParameter("secondValue")); %>
+		
+	<%=firstValue%>+<%=secondValue%>=<%=firstValue+secondValue%>
+	
+	
+		<h1>계산기 입니다.</h1>
+	<form action="/web1/cal" method="get">
+		<input type="text" name="firstValue">
+		<select name="cal">
+			<option>+</option>
+			<option>-</option>
+			<option>*</option>
+			<option>/</option>
+		</select>
+		<input type="text" name="secondValue"><br>
+		<input type="submit" value="전송">
+		<input type="reset" value="취소">
+	</form>
+	
+	
+
+
+
+</body>
+</html>

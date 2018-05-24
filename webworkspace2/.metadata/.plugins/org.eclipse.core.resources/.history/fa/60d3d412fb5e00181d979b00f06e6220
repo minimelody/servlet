@@ -1,0 +1,20 @@
+package member.model.dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import member.model.vo.Member;
+
+public class MemberDao {
+
+	public Member selectOne(String userId, String userPwd) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from member where userid=? and userpwd=?";
+		
+		
+		
+		return null;
+	}
+
+}

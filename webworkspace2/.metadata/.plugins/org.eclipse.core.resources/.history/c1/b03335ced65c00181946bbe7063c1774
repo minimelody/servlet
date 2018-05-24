@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ID 중복검사 페이지</title>
+</head>
+<script>
+
+</script>
+<body>
+중복검사 할 ID 입력 : <input type="text" id="id">
+<button onclick="idCheck();">중복검사</button>
+<span id="message"></span>
+</body>
+</html>
