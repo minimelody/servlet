@@ -1,0 +1,69 @@
+package member.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import member.model.service.MemberService;
+import member.model.vo.Member;
+
+/**
+ * Servlet implementation class MyPageServlet
+ */
+@WebServlet(name = "MyPage", urlPatterns = { "/myPage" })
+public class MyPageServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MyPageServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//1. 한글이 있을 경우 인코딩
+		request.setCharacterEncoding("utf-8");
+		
+		//2. 변수에서 값 꺼내서 저장
+		String userPwd = request.getParameter("userPwd");
+		//세션에서 ID 값 추출
+		HttpSession session = request.getSession(false);
+		if(session.getAttribute("user")!=null)
+		{
+			String userId = ((Member)session.getAttribute("user")).getUserId();
+			Member m = new MemberService().selectOne(userId, userPwd);
+			if(m!=null)//비밀번호를 정상적으로 입력 했다면
+			{
+				RequestDispatcher view = request.getRequestDispatcher("views/member/myInfo.jsp");
+				request.setAttribute("user", m);
+			}else //비밀번호가 틀렸다면
+			{
+				
+			}
+			response.sendRedirect("views/member/myPage.jsp");
+		}else //로그인을 하지 않고 요청했을 경우(비정상 접근)
+		{
+			response.sendRedirect("views/member/Error.html");
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

@@ -41,12 +41,23 @@ public class LoginServlet extends HttpServlet {
 		Member m = new MemberService().selectOne(userId, userPwd);
 		
 		//4. 처리 결과에 따라 성공/실패 페이지 리턴
-		HttpSession session = request.getSession();
-		session.setAttribute("user", m);
 		
 		if(m!=null)
 		{
-			response.sendRedirect("views/member/loginSuccess.jsp");
+			//로그인을 성공했다면? -> 세션 객체 생성하여 정보 저장
+			if(m.getActivation().equals("Y"))
+			{
+				HttpSession session = request.getSession();
+				session.setAttribute("user", m);
+				
+				//로그인 성공 결과 페이지 전송
+				response.sendRedirect("views/member/loginSuccess.jsp");
+			}
+			else
+			{
+				response.sendRedirect("views/member/loginNoActivation.jsp");
+			}
+			
 		}else 
 		{
 			response.sendRedirect("views/member/loginFail.jsp");

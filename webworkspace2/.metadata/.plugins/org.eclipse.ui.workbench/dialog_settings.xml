@@ -12,7 +12,6 @@
 		<list key="textArray">
 		</list>
 	</section>
-<<<<<<< HEAD
 	<section name="ImportExportAction">
 		<item value="org.eclipse.ui.wizards.import.FileSystem" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
@@ -26,6 +25,4 @@
 			<item value="C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib"/>
 		</list>
 	</section>
-=======
->>>>>>> efead7d24b153bbbde59c3c47078976ca59edf3a
 </section>

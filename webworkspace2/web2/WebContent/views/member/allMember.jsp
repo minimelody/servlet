@@ -11,7 +11,8 @@
 <body>
 <script>
 	function goback(){
-		history.go(-1);
+		//history.go(-1);
+		location.href="/index.jsp";
 	}
 </script>
 <h1>관리자 : 회원 관리 페이지</h1>

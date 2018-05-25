@@ -21,7 +21,7 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1,userId);
-			pstmt.setString(2, userPwd);
+			pstmt.setString(2,userPwd);
 			rset = pstmt.executeQuery();
 			if(rset.next())
 			{
@@ -36,6 +36,7 @@ public class MemberDao {
 				m.setGender(rset.getString("gender"));
 				m.setHobby(rset.getString("hobby"));
 				m.setEnrolldate(rset.getDate("enrolldate"));
+				m.setActivation(rset.getString("activation"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,7 +44,6 @@ public class MemberDao {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
-		
 		return m;
 	}
 
@@ -96,5 +96,68 @@ public class MemberDao {
 		}
 		return result;
 	}
+
+	public int insertMember(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into member values(?,?,?,?,?,?,?,?,?,sysdate,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserPwd());
+			pstmt.setString(3, m.getUserName());
+			pstmt.setInt(4, m.getAge());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getPhone());
+			pstmt.setString(7, m.getAddress());
+			pstmt.setString(8, m.getGender());
+			pstmt.setString(9, m.getHobby());
+			pstmt.setString(10, m.getActivation());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public boolean idCheck(Connection conn, String id) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		boolean result = false;
+		
+		String query = "SELECT * FROM member WHERE MEMBER_ID = '" + id + "'";
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next())
+			{
+				result =  true; // 해당 ID 사용자가 있음
+			}
+			else
+			{
+				result = false; // 해당 ID 사용자가 없음
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rset.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return result;
+	}
+
+	public int updateMember(Connection conn, Member m) {
+		// TODO Auto-generated method stub
+		return 0;
+	}	
 
 }

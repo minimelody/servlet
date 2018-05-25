@@ -23,7 +23,13 @@
 	</fieldset>
 <% }else{ %>
 	[<%=m.getUserName() %>]님 환영 합니다<br>
-	<a href="">마이페이지</a><br>
+	<lable onclick="myInfo();" id="infoBtn">마이페이지</lable>
+	<form action="myPage" method="post" style="display:none;" id="myInfo">
+		<label style="color:red;">비밀번호 입력 : </label>
+		<input type="password" name="userPwd">
+		<input type="submit" value="확인">
+	</form>
+	<br>
 	<a href="logout">로그아웃</a><br>
 	<a href="">회원탈퇴</a><br>
 	<% if(m.getUserId().equals("admin")){%>
@@ -31,5 +37,18 @@
 	<% } %>
 	
 <% } %>
+
+	<style>
+		#infoBtn{
+			cursor:pointer;
+			text-decoration:underline;
+			color:blue;
+		}
+	</style>
+	<script>
+		function myInfo(){
+			document.getElementById("myInfo").style="display:inline";
+		}
+	</script>
 </body>
 </html>
