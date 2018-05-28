@@ -1,0 +1,19 @@
+package notice.model.service;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import common.JDBCTemplate;
+import notice.model.dao.NoticeDao;
+import notice.model.vo.Notice;
+
+public class NoticeService {
+
+	public ArrayList<Notice> noticeAll() {
+		Connection conn = JDBCTemplate.conn();
+		ArrayList<Notice> list = new NoticeDao().noticeAll(conn);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+}

@@ -100,7 +100,7 @@ public class MemberDao {
 	public int insertMember(Connection conn, Member m) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = "insert into member values(?,?,?,?,?,?,?,?,?,sysdate,?)";
+		String query = "insert into member values(?,?,?,?,?,?,?,?,?,sysdate,?,sysdate)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, m.getUserId());
@@ -156,8 +156,87 @@ public class MemberDao {
 	}
 
 	public int updateMember(Connection conn, Member m) {
-		// TODO Auto-generated method stub
-		return 0;
-	}	
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		boolean changePwd = false;
+		try {
+			pstmt = conn.prepareStatement("select userPwd from member where userid='"+m.getUserId()+"'");
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				if(!(m.getUserPwd().equals(rset.getString("userPwd")))) {
+					changePwd = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String query = null;
+		if(changePwd==true) {
+		 query = "update member set userpwd=?,email=?,phone=?,address=?,hobby=?,last_modified=SYSDATE where userid=?";
+		}else
+		{
+		 query = "update member set userpwd=?,email=?,phone=?,address=?,hobby=? where userid=?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getUserPwd());
+			pstmt.setString(2, m.getEmail());
+			pstmt.setString(3, m.getPhone());
+			pstmt.setString(4, m.getAddress());
+			pstmt.setString(5, m.getHobby());
+			pstmt.setString(6, m.getUserId());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
 
+	public int deleteMember(Connection conn, String userId, String userPwd) {
+		Statement stmt = null;
+		int result = 0;
+		String query = "delete from member where userid='"+userId+"' and userpwd = '"+userPwd+"'"; //실제로는 이렇게 짜면 안되고 비활성이나 따로 탈퇴 테이블을 만들어서 기록
+		try {
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(stmt);
+		}
+		return result;
+	}
+
+	public boolean changePwdCheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		boolean result = false;
+		
+		String query = "select floor(sysdate-last_modified) as change_date from member where userid=?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+			{
+				if(rset.getInt("change_date")>=90) {
+					result = true;
+				}else {
+					result = false;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

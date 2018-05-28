@@ -1,0 +1,10 @@
+package notice.model.service;
+
+public class NoticeService {
+
+	public void noticeAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,12 @@
+package notice.model.vo;
+
+import java.sql.Date;
+
+public class Notice {
+	private int noticeNo;
+	private String subject;
+	private String contents;
+	private String userId;
+	private Date regDate;
+	
+}

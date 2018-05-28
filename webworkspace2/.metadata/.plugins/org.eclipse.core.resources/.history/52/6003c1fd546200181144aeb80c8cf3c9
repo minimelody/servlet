@@ -1,0 +1,12 @@
+package notice.model.dao;
+
+import java.sql.Connection;
+
+public class NoticeTestDao {
+
+	public void getCurrentPage(Connection conn, int currentPage, int recordCountPerPage) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

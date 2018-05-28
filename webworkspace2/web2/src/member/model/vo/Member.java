@@ -14,13 +14,12 @@ public class Member {
 	private String hobby;
 	private Date enrolldate;
 	private String activation;
+	private Date lastModified;
 	
 	public Member() {}
 
-	
-
 	public Member(String userId, String userPwd, String userName, int age, String email, String phone, String address,
-			String gender, String hobby, Date enrolldate, String activation) {
+			String gender, String hobby, String activation) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -31,7 +30,6 @@ public class Member {
 		this.address = address;
 		this.gender = gender;
 		this.hobby = hobby;
-		this.enrolldate = enrolldate;
 		this.activation = activation;
 	}
 
@@ -122,5 +120,15 @@ public class Member {
 	public void setActivation(String activation) {
 		this.activation = activation;
 	}
+
+	public Date getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
+	}
+	
+	
 
 }

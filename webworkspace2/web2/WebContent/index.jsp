@@ -31,13 +31,13 @@
 	</form>
 	<br>
 	<a href="logout">로그아웃</a><br>
-	<a href="">회원탈퇴</a><br>
+	<a href="delete">회원탈퇴</a><br>
 	<% if(m.getUserId().equals("admin")){%>
 		<a href="allMember">전체회원조회</a>
 	<% } %>
-	
 <% } %>
-
+	<br>
+	<a href="/notice">공지사항</a>
 	<style>
 		#infoBtn{
 			cursor:pointer;

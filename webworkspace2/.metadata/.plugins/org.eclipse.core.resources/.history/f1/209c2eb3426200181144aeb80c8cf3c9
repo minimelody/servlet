@@ -1,0 +1,28 @@
+package notice.model.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import common.JDBCTemplate;
+import notice.model.vo.Notice;
+
+public class NoticeDao {
+
+	public void getCurrentPage(Connection conn, int currentPage, int recordCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		//시작 게시물 계산
+		int start = 1;
+		
+		//끝 게시물 계산
+		int end = 10;
+	}
+
+
+
+}

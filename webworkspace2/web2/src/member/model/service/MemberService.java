@@ -84,7 +84,26 @@ public class MemberService {
 		else {
 			JDBCTemplate.rollback(conn);
 		}
+		JDBCTemplate.close(conn);
 		return result;
-	}	
-	
+	}
+
+	public int deleteMember(String userId, String userPwd) {
+		Connection conn = JDBCTemplate.conn();
+		int result = new MemberDao().deleteMember(conn,userId, userPwd);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public boolean changePwdCheck(String userId) {
+		Connection conn = JDBCTemplate.conn();
+		boolean result = new MemberDao().changePwdCheck(conn,userId);
+		JDBCTemplate.close(conn);
+		return result;
+	}
 }

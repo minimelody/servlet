@@ -11,7 +11,7 @@
 <body>
 	<center>
 	<h1>회원 가입 정보</h1>
-	<form action="update">
+	<form action="update" method="post">
 	아이디 : <input type="text" name="userId" value="<%=m.getUserId()%>" readonly><br>
 	패스워드 : <input type="password" name="userPwd" value="<%=m.getUserPwd()%>"><br>
 	패스워드(확인) : <input type="password" name="userPwd_re" value="<%=m.getUserPwd()%>"><br>

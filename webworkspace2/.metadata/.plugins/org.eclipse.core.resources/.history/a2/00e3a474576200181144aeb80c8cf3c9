@@ -1,0 +1,94 @@
+package notice.model.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import common.JDBCTemplate;
+import notice.model.vo.Notice;
+
+public class NoticeTestDao {
+
+	public ArrayList<Notice> getCurrentPage(Connection conn, int currentPage, int recordCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		//시작 게시물 계산
+		int start = currentPage*recordCountPerPage - (recordCountPerPage-1);
+		
+		//끝 게시물 계산
+		int end = currentPage*recordCountPerPage;
+		
+		String query = "select * from "
+				+ "(select notice.*, row_number() over(order by noticeno desc) as num from notice)"
+				+ "where num between ? and ?";
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			while(rset.next())
+			{
+				Notice n = new Notice();
+				n.setNoticeNo(rset.getInt("noticeno"));
+				n.setSubject(rset.getString("subject"));
+				n.setContents(rset.getString("contents"));
+				n.setUserId(rset.getString("userid"));
+				n.setRegDate(rset.getDate("regdate"));
+				list.add(n);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	public void getPageNavi(Connection conn, int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		//게시물의 토탈 개수를 구해야 함
+		int recordTotalCount = 0;
+		//총 게시물 개수 저장 변수 (정보가 없으므로 초기값은 0)
+		String query = "select count(*) as totalCount from notice";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			rset.next();
+			recordTotalCount = rset.getInt("totalCount");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		//navi 토탈 카운트
+		int pageTotalCount = 0;
+		if(recordTotalCount*recordCountPerPage!=0) {
+			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+		}
+		else {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+		
+		if(currentPage<1) {
+			currentPage = 1;
+		}else if(currentPage>pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+		
+		
+		
+		
+		
+	}
+	
+}

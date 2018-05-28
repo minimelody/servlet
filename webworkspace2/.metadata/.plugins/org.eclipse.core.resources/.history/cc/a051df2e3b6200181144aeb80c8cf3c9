@@ -1,0 +1,40 @@
+package notice.model.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import notice.model.vo.Notice;
+
+public class NoticeDao {
+
+	public ArrayList<Notice> noticeAll(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = "select * from notice";
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			while(rset.next())
+			{
+				Notice n = new Notice();
+				n.setNoticeNo(rset.getInt("noticeno"));
+				n.setSubject(rset.getString("subject"));
+				n.setContents(rset.getString("contents"));
+				n.setUserId(rset.getString("userid"));
+				n.setRegDate(rset.getDate("regdate"));
+				list.add(n);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+
+}

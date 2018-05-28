@@ -1,115 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"   %>
-<%@ page import="member.model.vo.*" 
-		import="member.model.service.*"
-%>
+    pageEncoding="UTF-8"
+    import="member.model.service.*" import="member.model.vo.*"
+    %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script>
+    function back()
+    {
+        history.go(-1);
+    }
+    </script>
 </head>
 <body>
+   <%
+      Member m = (Member)session.getAttribute("user");
+      String id = m.getMemberId();
+      String pass = m.getMemberPwd();
+      %>
+         <h2><%=id %> 회원 탈퇴하려면 비밀번호를 입력해주세요.</h2>
+          비밀번호 입력 : <input type="password" id="pwd">
+         <button onclick="confirmDel();">확인</button>
+         <script>         
+            function confirmDel(){
+               if(document.getElementById("pwd").value=="<%=pass%>")
+               {
+                  var confirmChk = window.confirm("정말로 탈퇴하시겠습니까?");
+                  
+                  if(confirmChk){
+                     <%
+                     boolean result = new MemberService().memberDelete(id);
+                        if(result){
+                           session.removeAttribute("user");
+                           %>
+                           alert("회원탈퇴에 성공했습니다.");
+                           location.href="memberIndex.html";
+                        <%}else{%>
+                           alert("회원탈퇴에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+                           history.go(-1);
+                        <%}   %>            
+                  }
+                  else
+                  {
+                     alert("회원 탈퇴를 취소했습니다.");
+                     history.go(-1);
+                  }
+               }
+               else
+               {
+                  alert("비밀번호가 틀렸습니다.");
+               }
+            }
+         </script>
 
-<!--  <% 
-	String inputPass = request.getParameter("userPwd");
-	String sessionPass = ((Member)session.getAttribute("user")).getMemberPwd;
-	if(inputPass == sessionPass)
-	{
-		int result = new MemberService().memberDelete(id);
-		if(result>0)
-		{
-			out.println("<h1 탈퇴 정상 처리 되었습니다.</h1>");
-		}
-		else
-		{
-			out.println("<h1>탈퇴 실패 처리 되었습니다.</h1>");
-		}
-	}else{
-		out.println("<h1>비밀번호가 맞지 않습니다.</h1>");
-%>
-
-<%
-	String inputPass = request.getParameter("userPwd");
-	String sessionPass = session.getAttribute("user");
-	if(inputPass == sessionPass)
-	{
-		
-	}else{
-%>
-		<h1>비밀번호가 같지 않습니다. 재확인 바랍니다.</h1>
-<% 	}
-	%>
-
--->
-
-
-
-<script>
-	function delCheck()
-	{
-		var userPwd = document.getElementById('userPwd').value;
-		<%Member m = (Member)session.getAttribute("user"); 
-			String pwd = m.getMemberPwd();
-			String id = m.getMemberId();
-		%>
-		
-		
-		if(userPwd==<%=pwd%>)
-		{
-			if(window.confirm("정말 탈퇴하시겠습니까?"))
-			{
-				<%
-				boolean result = new MemberService().memberDelete(id);
-				%>
-				var result = <%=result%>;
-				
-				if(result==true)
-				{
-					alert("회원 탈퇴에 성공하셨습니다.");
-					<%
-						session.invalidate();
-					%>
-					location.href="/web1/views/member/memberIndex.html";
-				}else
-				{
-					alert("회원 탈퇴에 실패하셨습니다.");
-					location.href="/web1/views/member/memberIndex.html";
-				}
-				
-			}else
-			{
-				alert("탈퇴 취소하셨습니다.")
-			}
-			
-			
-		}else
-		{
-			alert("비밀번호가 맞지 않습니다.");
-		}
-		
-		
-	}
-	
-</script>
-
-<center>
-		<h1>회원탈퇴</h1>
-		비밀번호 입력 : <input type="password" id="userPwd">
-		<button onclick="delCheck()">확인</button>
-</center>
-
-
+    <!--  <h2 id="curId">mslove 계정을 삭제하려면, 회원정보를 다시 입력해주세요.</h2>
+    <form action="userDelConfirm.jsp" method="post">
+           아이디 입력 : <input type="text" name="id" />
+           비밀번호 입력 : <input type="password" name="pwd">
+        <input type="submit" value="삭제하기"/>
+        <button type="button" onclick="back();">취소</button>
+    </form>
+    -->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

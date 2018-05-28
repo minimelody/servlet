@@ -1,0 +1,98 @@
+package notice.model.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import common.JDBCTemplate;
+import notice.model.vo.Notice;
+
+public class NoticeDao {
+
+	public ArrayList<Notice> getCurrentPage(Connection conn, int currentPage, int recordCountPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		//시작 게시물 계산
+		int start = currentPage*recordCountPerPage - (recordCountPerPage-1);
+					// 만약 요청한 페이지가 1페이지 라면? -> 1
+					// 1*10 - (10-1) => 1
+					// 만약 요청한 페이지가 3페이지 라면? -> 21
+					// 3*10 - (10-1) => 21
+		
+		//끝 게시물 계산
+		int end = currentPage*recordCountPerPage;
+					// 만약 요청한 페이지가 1페이지 라면? -> 10
+					// 1*10 => 10
+					// 만약 요청한 페이지가 3페이지 라면? -> 30
+					// 3*10 => 30
+		String query = "select * from "
+				+ "(select notice.*, row_number() over(order by noticeno desc) as num from notice) "
+				+ "where num between ? and ?";
+		
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			while(rset.next())
+			{
+				Notice n = new Notice();
+				n.setNoticeNo(rset.getInt("noticeno"));
+				n.setSubject(rset.getString("subject"));
+				n.setContents(rset.getString("contents"));
+				n.setUserId(rset.getString("userid"));
+				n.setRegDate(rset.getDate("regdate"));
+				list.add(n);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	public void getPageNavi(Connection conn, int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		//게시물의 토탈 개수를 구해야 함
+		int recordTotalCount = 0; 
+		//총 게시물 개수 저장 변수 (정보가 없으므로 초기값은 0)
+		String query = "select count(*) as totalCount from notice";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			rset.next();
+			recordTotalCount = rset.getInt("totalCount");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		//124 -> navi 13
+		
+		int pageTotalCount = 0; // navi 토탈 카운트
+		// 페이지당 10개씩 보이게 만들어서 navi list를 만들려면?
+		// 토탈 게시물이 124개 라고 했을때 124%10을 한후 +1 만큼 만들어야 함
+		// 만약 나머지가 0으로 떨어 진다면 +1을 하지 않음
+		if(recordTotalCount*recordCountPerPage!=0) {
+			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+		}else {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+		
+		
+	}
+
+
+
+}

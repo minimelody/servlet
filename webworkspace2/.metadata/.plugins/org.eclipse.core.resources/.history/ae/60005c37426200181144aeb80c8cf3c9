@@ -1,0 +1,21 @@
+package notice.model.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import common.JDBCTemplate;
+import notice.model.vo.Notice;
+
+public class NoticeDao {
+
+	public void getCurrentPage(Connection conn, int currentPage, int recordCountPerPage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+}

@@ -1,0 +1,15 @@
+package notice.model.service;
+
+import java.sql.Connection;
+
+import common.JDBCTemplate;
+import notice.model.dao.NoticeDao;
+
+public class NoticeService {
+
+	public void noticeAll() {
+		Connection conn = JDBCTemplate.conn();
+		new NoticeDao().noticeAll(conn);
+	}
+
+}
