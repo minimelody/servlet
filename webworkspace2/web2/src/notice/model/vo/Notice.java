@@ -11,13 +11,11 @@ public class Notice {
 	
 	public Notice() {}
 
-	public Notice(int noticeNo, String subject, String contents, String userId, Date regDate) {
-		super();
+	public Notice(int noticeNo, String subject, String contents, String userId) {
 		this.noticeNo = noticeNo;
 		this.subject = subject;
 		this.contents = contents;
 		this.userId = userId;
-		this.regDate = regDate;
 	}
 
 	public int getNoticeNo() {

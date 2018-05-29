@@ -36,4 +36,69 @@ public class NoticeService {
 		return pd;
 	}
 
+	public PageData searchList(String search, int currentPage) {
+		Connection conn = JDBCTemplate.conn();
+		
+		int recordCountPerPage = 10;
+		int naviCountPerPage = 5;
+		
+		ArrayList<Notice> list = new NoticeDao().getSearchCurrentPage(conn, currentPage, recordCountPerPage, search);
+		String pageNavi = new NoticeDao().getSearchPageNavi(conn, currentPage, recordCountPerPage, naviCountPerPage, search);
+		
+		PageData pd = null;
+		if(!list.isEmpty() && !pageNavi.isEmpty()) {
+			pd = new PageData();
+			pd.setNoticeList(list);
+			pd.setPageNavi(pageNavi);
+		}
+		JDBCTemplate.close(conn);
+		return pd;
+	}
+
+	public Notice noticeSelect(int noticeNo) {
+		Connection conn = JDBCTemplate.conn();
+		Notice notice = new NoticeDao().noticeSelect(conn, noticeNo);
+		JDBCTemplate.close(conn);
+		return notice;
+	}
+
+	public int updateNotice(Notice n) {
+		Connection conn = JDBCTemplate.conn();
+		int result = new NoticeDao().noticeUpdate(conn, n);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}
+		else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int insertNotice(Notice n) {
+		Connection conn = JDBCTemplate.conn();
+		int result = new NoticeDao().insertNotice(conn, n);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}
+		else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public int deleteNotice(int noticeNo) {
+		Connection conn = JDBCTemplate.conn();
+		int result = new NoticeDao().deleteNotice(conn, noticeNo);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}
+		else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }
