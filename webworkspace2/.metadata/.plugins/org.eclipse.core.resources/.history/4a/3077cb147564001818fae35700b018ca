@@ -1,0 +1,16 @@
+package file.model.service;
+
+import java.sql.Connection;
+
+import common.JDBCTemplate;
+import file.model.vo.DataFile;
+
+public class FileService {
+
+	public int uploadFile(DataFile df) {
+		Connection conn = JDBCTemplate.conn();
+		FileDao().uploadFile(conn,df);
+		return 0;
+	}
+	
+}

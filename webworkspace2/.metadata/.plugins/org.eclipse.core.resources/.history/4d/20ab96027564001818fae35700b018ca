@@ -1,0 +1,12 @@
+package file.model.service;
+
+import file.model.vo.DataFile;
+
+public class FileService {
+
+	public int uploadFile(DataFile df) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+}

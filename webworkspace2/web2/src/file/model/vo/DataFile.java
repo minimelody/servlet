@@ -1,16 +1,15 @@
 package file.model.vo;
 
-import oracle.sql.TIMESTAMP;
+import java.sql.Timestamp;
 
 public class DataFile {
 	private String fileName;
 	private String filePath;
-	private int fileSize;
+	private long fileSize;
 	private String fileUser;
-	private TIMESTAMP uploadTime;
+	private Timestamp uploadTime;
 	public DataFile() {}
-	public DataFile(String fileName, String filePath, int fileSize, String fileUser, TIMESTAMP uploadTime) {
-		super();
+	public DataFile(String fileName, String filePath, long fileSize, String fileUser, Timestamp uploadTime) {
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileSize = fileSize;
@@ -29,10 +28,10 @@ public class DataFile {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getFileUser() {
@@ -41,10 +40,10 @@ public class DataFile {
 	public void setFileUser(String fileUser) {
 		this.fileUser = fileUser;
 	}
-	public TIMESTAMP getUploadTime() {
+	public Timestamp getUploadTime() {
 		return uploadTime;
 	}
-	public void setUploadTime(TIMESTAMP uploadTime) {
+	public void setUploadTime(Timestamp uploadTime) {
 		this.uploadTime = uploadTime;
 	}
 	

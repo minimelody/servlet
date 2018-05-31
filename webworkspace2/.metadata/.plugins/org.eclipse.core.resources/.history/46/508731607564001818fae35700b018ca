@@ -1,0 +1,16 @@
+package file.model.dao;
+
+import java.sql.Connection;
+
+import file.model.vo.DataFile;
+
+public class FileDao {
+
+	public int uploadFile(Connection conn, DataFile df) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+}

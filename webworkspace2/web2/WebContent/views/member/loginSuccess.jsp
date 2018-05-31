@@ -6,6 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script>
+	window.onload = function(){
+		if(opener!=null){
+			//자신이 팝업창 일때
+			opener.location.reload();
+			window.close();
+		}
+	}
+</script>
 <title>Insert title here</title>
 </head>
 <body>
